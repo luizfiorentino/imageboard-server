@@ -1,5 +1,11 @@
 const express = require("express");
-const app = express();
-const port = process.env.PORT || 4001;
+const imageRouter = require("./routers/image");
+const userRouter = require("./routers/user");
 
-app.listen(port, () => console.log("Listening on port:", port));
+const app = express();
+const PORT = process.env.PORT || 4001;
+
+app.use("/images", imageRouter);
+app.use("/users", userRouter);
+
+app.listen(PORT, () => console.log("Listening on port:", PORT));
