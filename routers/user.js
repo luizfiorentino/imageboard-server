@@ -11,4 +11,24 @@ router.get("/", async (req, res, next) => {
     next(e);
   }
 });
+
+router.post("/", async (req, res, next) => {
+  try {
+    const { email, password, fullName } = req.body;
+    if (!email || email === " " || !password || !fullName) {
+      res
+        .status(400)
+        .send("Please inform a valid email address, full name and/or password");
+    } else {
+      const newUser = await User.create({
+        email,
+        password,
+        fullName,
+      });
+      res.json(newUser);
+    }
+  } catch (e) {
+    next(e);
+  }
+});
 module.exports = router;
