@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const User = require("../models").user;
+const bcrypt = require("bcrypt");
 
 const router = new Router();
 
@@ -22,7 +23,7 @@ router.post("/", async (req, res, next) => {
     } else {
       const newUser = await User.create({
         email,
-        password,
+        password: bcrypt.hashSync(password, 10),
         fullName,
       });
       res.json(newUser);
