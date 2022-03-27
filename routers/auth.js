@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const res = require("express/lib/response");
 const User = require("../models").user;
 const Image = require("../models").image;
+const authMiddleware = require("../auth/middleware");
 
 const router = new Router();
 
@@ -35,6 +36,12 @@ router.post("/login", async (req, res, next) => {
       res.status(400).send({ message: "Incorrect password" });
     }
   }
+});
+
+router.get("/test-auth", authMiddleware, (req, res) => {
+  res.send({
+    message: `Thanks for visiting the secret endpoint ${req.user.email}.`,
+  });
 });
 
 module.exports = router;

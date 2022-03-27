@@ -1,10 +1,11 @@
 const { Router } = require("express");
 const { toData } = require("../auth/jwt");
 const Image = require("../models").image;
+const authMiddleware = require("../auth/middleware");
 
 const router = new Router();
 
-router.get("/", async (req, res, next) => {
+router.get("/", authMiddleware, async (req, res, next) => {
   try {
     const images = await Image.findAll();
     res.json(images);
